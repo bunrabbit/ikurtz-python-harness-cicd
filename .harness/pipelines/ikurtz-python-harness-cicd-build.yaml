@@ -8,7 +8,7 @@ pipeline:
       codebase:
         build: <+input>
         connectorRef: account.Github_OAuth_1734293510658  # Replace with your GitHub OAuth connector
-        repoName: ikurtz-python-harness-cicd/dronedemo  # Replace with your repository and app name
+        repoName: ikurtz-python-harness-cicd  # Replace with your repository and app name
   stages:
     - stage:
         identifier: build
