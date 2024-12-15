@@ -32,7 +32,7 @@ pipeline:
                   identifier: Build_and_Push_to_Docker
                   spec:
                     connectorRef: ikurtzdockerhub
-                    repo: kurtzy/ikurtz-harness-python:v1
+                    repo: ikurtz-harness-python
                     tags:
                       - <+pipeline.sequenceId>
           infrastructure:
