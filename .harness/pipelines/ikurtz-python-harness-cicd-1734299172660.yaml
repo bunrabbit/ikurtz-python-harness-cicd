@@ -5,7 +5,7 @@ pipeline:
   orgIdentifier: default
   stages:
     - stage:
-        name: Build
+        name: Build Test and Push
         identifier: Build
         type: CI
         spec:
@@ -14,14 +14,17 @@ pipeline:
             steps:
               - step:
                   type: Run
-                  identifier: build_python_app
-                  name: Build Python App
+                  name: Run Unit Tests
+                  identifier: Run_Unit_Tests
                   spec:
+                    connectorRef: ikurtzdockerhub
+                    image: python:3.10
                     shell: Sh
                     command: |-
                       echo "Welcome to Harness CI"
                       python -m pip install --upgrade pip
                       pip install  pytest
+                      pytest --junitxml=unit-tests.xml --tb=long || true
                       if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
           infrastructure:
             type: KubernetesDirect
