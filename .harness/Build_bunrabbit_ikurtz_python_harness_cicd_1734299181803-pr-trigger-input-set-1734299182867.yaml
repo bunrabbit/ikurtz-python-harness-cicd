@@ -1,0 +1,14 @@
+inputSet:
+  name: Build_bunrabbit_ikurtz_python_harness_cicd_1734299181803-pr-trigger-input-set
+  identifier: Build_bunrabbit_ikurtz_python_harness_cicd_1734299181803prtriggerinputset
+  orgIdentifier: default
+  projectIdentifier: default_project
+  pipeline:
+    identifier: Build_bunrabbit_ikurtz_python_harness_cicd_1734299181803
+    properties:
+      ci:
+        codebase:
+          build:
+            type: PR
+            spec:
+              number: <+trigger.prNumber>
