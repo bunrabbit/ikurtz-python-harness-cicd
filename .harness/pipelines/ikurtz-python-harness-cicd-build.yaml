@@ -1,18 +1,18 @@
 pipeline:
   identifier: Build_bunrabbit_ikurtz_python_harness_cicd_1734293642977
-  name: ikurtz-python-harness-cicd-build
+  name: Build and Deploy Application
   orgIdentifier: default
   projectIdentifier: default_project
   properties:
     ci:
       codebase:
         build: <+input>
-        connectorRef: account.Github_OAuth_1734293510658
-        repoName: bunrabbit/ikurtz-python-harness-cicd
+        connectorRef: account.Github_OAuth_1734293510658  # Replace with your GitHub OAuth connector
+        repoName: your-repository-name/your-app-name  # Replace with your repository and app name
   stages:
     - stage:
         identifier: build
-        name: build
+        name: Build Stage
         spec:
           caching:
             enabled: true
@@ -20,41 +20,52 @@ pipeline:
           execution:
             steps:
               - step:
-                  identifier: runlinter
-                  name: run linter
+                  identifier: run_linter
+                  name: Run Linter
                   spec:
                     command: |-
                       pip install flake8
                       flake8 .
-                  timeout: ""
+                  timeout: "10m"
                   type: Run
               - step:
-                  type: Run
                   identifier: build_python_app
-                  name: Build Python App
+                  name: Build Python Application
                   spec:
                     shell: Sh
                     command: |-
-                      echo "Welcome to Harness CI"
+                      echo "Building the Python application in Harness CI"
                       python -m pip install --upgrade pip
-                      pip install  pytest
+                      pip install pytest
                       if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+                  timeout: "20m"
+                  type: Run
               - step:
-                  identifier: dockerbuild
-                  name: docker_build
+                  identifier: run_tests
+                  name: Run Tests
                   spec:
-                    caching: true
-                    connectorRef: ikurtzharnesscluster
-                    repo: hello/world
+                    shell: Sh
+                    command: |-
+                      echo "Running tests"
+                      pytest
+                  timeout: "15m"
+                  type: Run
+              - step:
+                  type: BuildAndPushECR
+                  name: ikurtz-python-app-image-push
+                  identifier: ikurtz_python_app_image_push
+                  spec:
+                    connectorRef: ikurtzawsconnector
+                    region: us-east-1
+                    account: "957764302791"
+                    imageName: ikurtz-python-image
                     tags:
                       - latest
-                  timeout: ""
-                  type: BuildAndPushDockerRegistry
           infrastructure:
             type: KubernetesDirect
             spec:
-              connectorRef: ikurtzharnesscluster
-              namespace: ikurtz-harness-delegate-ng
+              connectorRef: ikurtzharnesscluster # Replace with your Kubernetes cluster connector
+              namespace: ikurtz-harness-delegate-ng  # Replace with your namespace
               automountServiceAccountToken: true
               nodeSelector: {}
               os: Linux
