@@ -1,0 +1,14 @@
+inputSet:
+  name: Build_bunrabbit_ikurtz_python_harness_cicd_1734293642977-push-trigger-input-set
+  identifier: Build_bunrabbit_ikurtz_python_harness_cicd_1734293642977pushtriggerinputset
+  orgIdentifier: default
+  projectIdentifier: default_project
+  pipeline:
+    identifier: Build_bunrabbit_ikurtz_python_harness_cicd_1734293642977
+    properties:
+      ci:
+        codebase:
+          build:
+            type: branch
+            spec:
+              branch: <+trigger.branch>
