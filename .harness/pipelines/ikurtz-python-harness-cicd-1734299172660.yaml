@@ -14,17 +14,23 @@ pipeline:
             steps:
               - step:
                   type: Run
-                  name: Echo Welcome Message
-                  identifier: Echo_Welcome_Message
+                  identifier: build_python_app
+                  name: Build Python App
                   spec:
                     shell: Sh
-                    command: echo "Welcome to Harness CI"
-          platform:
-            os: MacOS
-            arch: Amd64
-          runtime:
-            type: Docker
-            spec: {}
+                    command: |-
+                      echo "Welcome to Harness CI"
+                      python -m pip install --upgrade pip
+                      pip install  pytest
+                      if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+          infrastructure:
+            type: KubernetesDirect
+            spec:
+              connectorRef: ikurtzharnesscluster
+              namespace: ikurtz-harness-delegate-ng
+              automountServiceAccountToken: true
+              nodeSelector: {}
+              os: Linux
   properties:
     ci:
       codebase:
