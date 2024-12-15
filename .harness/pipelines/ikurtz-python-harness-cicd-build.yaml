@@ -23,6 +23,7 @@ pipeline:
                   identifier: run_linter
                   name: Run Linter
                   spec:
+                    image: python:3.10
                     command: |-
                       pip install flake8
                       flake8 .
