@@ -2,13 +2,13 @@ FROM python:3.9-alpine
 MAINTAINER Greg Taylor <gtaylor@gc-taylor.com>
 
 RUN pip install --upgrade pip setuptools wheel
-COPY wheeldir /opt/app/wheeldir
+COPY wheeldir /harness/wheeldir
 # These are copied and installed first in order to take maximum advantage
 # of Docker layer caching (if enabled).
 COPY *requirements.txt /opt/app/src/
-RUN pip install --use-wheel --no-index --find-links=/opt/app/wheeldir \
+RUN pip install --use-wheel --no-index --find-links=/harness/wheeldir \
     -r /opt/app/src/requirements.txt
-RUN pip install --use-wheel --no-index --find-links=/opt/app/wheeldir \
+RUN pip install --use-wheel --no-index --find-links=/harness/wheeldir \
     -r /opt/app/src/test-requirements.txt
 
 COPY . /opt/app/src/
