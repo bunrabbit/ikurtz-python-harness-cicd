@@ -26,27 +26,17 @@ pipeline:
                       pip install  pytest
                       pytest --junitxml=unit-tests.xml --tb=long || true
                       if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
-              - parallel:
-                  - step:
-                      type: BuildAndPushDockerRegistry
-                      name: Build and Push to Docker
-                      identifier: Build_and_Push_to_Docker
-                      spec:
-                        connectorRef: ikurtzdockerhub
-                        repo: kurtzy/ikurtz-harness-python
-                        tags:
-                          - <+pipeline.sequenceId>
-                  - step:
-                      type: BuildAndPushECR
-                      name: Build and Push to ECR
-                      identifier: Build_and_Push_to_ECR
-                      spec:
-                        connectorRef: ikurtzawsconnector
-                        region: us-east-1
-                        account: "957764302791"
-                        imageName: v1
-                        tags:
-                          - <+pipeline.sequenceId>
+              - step:
+                  type: BuildAndPushECR
+                  name: Build and Push to ECR
+                  identifier: Build_and_Push_to_ECR
+                  spec:
+                    connectorRef: ikurtzawsconnector
+                    region: us-east-1
+                    account: "957764302791"
+                    imageName: v1
+                    tags:
+                      - <+pipeline.sequenceId>
           infrastructure:
             type: KubernetesDirect
             spec:
