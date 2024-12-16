@@ -84,6 +84,10 @@ pipeline:
                 - AllErrors
               action:
                 type: StageRollback
+        delegateSelectors:
+          - ikurtz-harness-delegate-k8s
+        when:
+          pipelineStatus: Success
   properties:
     ci:
       codebase:
