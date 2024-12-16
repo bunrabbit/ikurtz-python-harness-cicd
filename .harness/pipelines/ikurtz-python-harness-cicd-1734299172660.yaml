@@ -92,5 +92,5 @@ pipeline:
     ci:
       codebase:
         connectorRef: account.Github_OAuth_1734293510658
-        repoName: bunrabbit/ikurtz-python-harness-cicd
+        repoName: ikurtz-python-harness-cicd
         build: <+input>
