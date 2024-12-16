@@ -34,7 +34,7 @@ pipeline:
                     connectorRef: ikurtzawsconnector
                     region: us-east-1
                     account: "957764302791"
-                    imageName: v1
+                    imageName: ikurtz-harness/python-cicd
                     tags:
                       - <+pipeline.sequenceId>
           infrastructure:
